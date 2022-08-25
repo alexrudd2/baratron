@@ -75,7 +75,7 @@ class CapacitanceManometer(object):
         """Initialize device.
 
         Note that this constructor does not not connect. This will happen
-        on the first avaiable async call (ie. `await manometer.get()` or
+        on the first available async call (ie. `await manometer.get()` or
         `async with CapacitanceManometer(ip) as manometer`).
 
         Args:
