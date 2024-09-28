@@ -10,9 +10,11 @@ setup(
     description='Python driver for MKS eBaratron capacitance manometers.',
     long_description=long_description,
     long_description_content_type='text/markdown',
-    url='http://github.com/numat/baratron/',
+    url='https://github.com/alexrudd2/baratron/',
     author='Patrick Fuller',
-    author_email='pat@numat-tech.com',
+    author_email='patrickfuller@gmail.com',
+    maintainer='Alex Ruddick',
+    maintainer_email='alex@ruddick.tech',
     packages=['baratron'],
     install_requires=['aiohttp>=3.3'],
     entry_points={
