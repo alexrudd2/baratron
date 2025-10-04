@@ -154,7 +154,7 @@ class CapacitanceManometer(object):
         async with self.session.post(self.address, **self.request) as r:
             response = await r.text()
             if not response or r.status > 200:
-                raise IOError(
+                raise OSError(
                     f"Could not communicate with eBaratron at '{self.address}'."
                 )
             return response
