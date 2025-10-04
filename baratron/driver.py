@@ -4,6 +4,7 @@ Python driver for MKS eBaratron capacitance manometers.
 Distributed under the GNU General Public License v2
 Copyright (C) 2019 NuMat Technologies
 """
+from typing import ClassVar
 from xml.etree import ElementTree
 
 import aiohttp
@@ -16,7 +17,7 @@ class CapacitanceManometer:
     (http://www.mksinst.com/product/category.aspx?CategoryID=72).
     """
 
-    evids = {
+    evids: ClassVar = {
         'pressure': 'EVID_100',
         'run hours': 'EVID_102',
         'pressure units': 'EVID_105',
@@ -26,7 +27,7 @@ class CapacitanceManometer:
         'system status': 'EVID_208',
         'full-scale pressure': 'EVID_1103',
     }
-    pressure_units = [
+    pressure_units: ClassVar = [
         'full-scale ratio',
         'psi',
         'torr',
@@ -41,14 +42,14 @@ class CapacitanceManometer:
         'atm',
         'g / cm2',
     ]
-    led = [
+    led: ClassVar = [
         'red',
         'green',
         'yellow',
         None,
         'blinking',
     ]
-    status = [
+    status: ClassVar = [
         None,
         'Signal Error (ADC0)',
         'Signal Error (ADC1)',
