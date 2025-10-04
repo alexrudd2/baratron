@@ -40,7 +40,7 @@ $ baratron 192.168.1.100
 
 ### Python
 
-This uses Python ≥3.5's async/await syntax to asynchronously communicate with
+This uses Python async/await syntax to asynchronously communicate with
 the device. For example:
 
 ```python
