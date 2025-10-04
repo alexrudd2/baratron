@@ -1,0 +1,68 @@
+[project]
+name = "baratron"
+version = "0.3.1"
+description = "Python driver for MKS eBaratron capacitance manometers."
+license = "GPL-2.0-or-later"
+authors = [
+  {name = "Pat Fuller", email = "patrickfuller@gmail.com" },
+]
+maintainers = [
+  {name = "Alex Ruddick", email = "alex@ruddick.tech" }
+]
+readme = "README.md"
+classifiers=[
+    'Development Status :: 4 - Beta',
+    'Natural Language :: English',
+    'Programming Language :: Python',
+    'Programming Language :: Python :: 3.8',
+    'Programming Language :: Python :: 3.9',
+    'Topic :: Scientific/Engineering :: Human Machine Interfaces'
+]
+requires-python = ">=3.8"
+dependencies = [
+    "aiohttp>=3.10.11",
+]
+
+[project.scripts]
+alicat = "baratron:command_line"
+
+[project.urls]
+Homepage = "https://github.com/alexrudd2/baratron"
+Issues = "https://github.com/alexrudd2/baratron/issues"
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project.optional-dependencies]
+test = [
+  'ruff==0.13.2',
+]
+
+[tool.ruff.lint]
+ignore = [
+  "C901",     # complexity
+  "D104",     # Missing docstring in public package
+  "D107",     # Missing docstring in __init__
+  "W293",     # blank line contains whitespace
+]
+
+select = [
+#    "B",   # flake8-bugbear
+    "C",   # complexity
+#    "COM", # trailing comma rules
+    "D",   # docstrings
+    "E",   # pycodestyle errors
+    "F",   # pyflakes
+    "I",   # isort
+    "PT",  # flake8-pytest
+#    "RUF", # ruff base config
+    "SIM", # flake-simplify
+    "UP",  # pyupgrade
+    "W",   # pycodestyle warnings
+    "YTT", # flake8-2020
+    # "ARG", # flake8-unused args
+]
+
+[tool.ruff.lint.pydocstyle]
+convention = "pep257"
