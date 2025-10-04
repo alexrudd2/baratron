@@ -39,6 +39,8 @@ dev = [
     "ruff==0.13.2",
     "pytest>=8.3.5",
     "pytest-asyncio>=0.24.0",
+    "mypy>=1.14.1",
+    "pyright>=1.1.406",
 ]
 
 [tool.ruff]
@@ -72,3 +74,10 @@ select = [
 
 [tool.ruff.lint.pydocstyle]
 convention = "pep257"
+
+[tool.mypy]
+check_untyped_defs = true
+
+[tool.pyright]
+venvPath = "."
+venv = ".venv"

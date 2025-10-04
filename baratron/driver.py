@@ -85,7 +85,7 @@ class CapacitanceManometer:
         """
         self.address = f"http://{address.lstrip('http://').rstrip('/')}/ToolWeb/Cmd"
         self.session = None
-        self.Timeout = aiohttp.ClientTimeout(total=timeout)
+        self.timeout = aiohttp.ClientTimeout(total=timeout)
         ids = ''.join(f'<V Name="{evid}"/>' for evid in self.evids.values())
         body = f'<PollRequest>{ids}</PollRequest>'
         self.request = {
@@ -104,7 +104,7 @@ class CapacitanceManometer:
 
     async def connect(self):
         """Connect with device, opening persistent session."""
-        self.session = aiohttp.ClientSession(timeout=self.Timeout)
+        self.session = aiohttp.ClientSession(timeout=self.timeout)  #type: ignore   # fixme
 
     async def disconnect(self):
         """Close the underlying session, if it exists."""
@@ -124,23 +124,23 @@ class CapacitanceManometer:
             evid, value = item.get('Name'), item.text
             key = next(k for k, v in self.evids.items() if v == evid)
             if key == 'pressure units':
-                state[key] = self.pressure_units[int(value)]
+                state[key] = self.pressure_units[int(value)]  # type: ignore   # fixme
             elif key == 'system status':
-                i = int(value)
+                i = int(value)  #type: ignore   # fixme
                 statuses = ([s for bit, s in enumerate(self.status)
                              if s and bool(i >> bit & 1)] or ['ok'])
                 state[key] = ', '.join(statuses)
             elif key == 'led color':
-                i = int(value)
+                i = int(value)  #type: ignore   # fixme
                 led_statuses = ([s for bit, s in enumerate(self.led)
                                  if s and bool(i >> bit & 1)] or ['unknown'])
                 state[key] = ', '.join(led_statuses)
             elif key in ['pressure', 'full-scale pressure', 'drift']:
-                state[key] = float(value)
+                state[key] = float(value)  # type: ignore   # fixme
             elif key in ['run hours', 'wait hours']:
-                state[key] = float(value) / 3600.0
+                state[key] = float(value) / 3600.0  # type: ignore   # fixme
             else:
-                state[key] = value
+                state[key] = value  # type: ignore   # fixme
         return state
 
     async def _request(self):
@@ -151,7 +151,7 @@ class CapacitanceManometer:
         """
         if self.session is None:
             await self.connect()
-        async with self.session.post(self.address, **self.request) as r:
+        async with self.session.post(self.address, **self.request) as r:  # type: ignore   # fixme
             response = await r.text()
             if not response or r.status > 200:
                 raise OSError(
