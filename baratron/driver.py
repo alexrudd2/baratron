@@ -9,7 +9,7 @@ from xml.etree import ElementTree
 import aiohttp
 
 
-class CapacitanceManometer(object):
+class CapacitanceManometer:
     """Driver for MKS eBaratron capacitance manometers.
 
     More information on the device can be found [here]
