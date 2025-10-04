@@ -24,7 +24,7 @@ class CapacitanceManometer:
         'wait hours': 'EVID_107',
         'drift': 'EVID_114',
         'system status': 'EVID_208',
-        'full-scale pressure': 'EVID_1103'
+        'full-scale pressure': 'EVID_1103',
     }
     pressure_units = [
         'full-scale ratio',
@@ -39,14 +39,14 @@ class CapacitanceManometer:
         'Pa',
         'kPa',
         'atm',
-        'g / cm2'
+        'g / cm2',
     ]
     led = [
         'red',
         'green',
         'yellow',
         None,
-        'blinking'
+        'blinking',
     ]
     status = [
         None,
@@ -68,7 +68,7 @@ class CapacitanceManometer:
         'Power Supply Out of Spec',
         'e-Baratron Zeroing Recommended',
         'Cumulative Adjustment Over 20%',
-        'Heater Failure'
+        'Heater Failure',
     ]
 
     def __init__(self, address: str, timeout: float = 1.0):
@@ -90,7 +90,7 @@ class CapacitanceManometer:
         body = f'<PollRequest>{ids}</PollRequest>'
         self.request = {
             'headers': {'Content-Type': 'text/xml'},
-            'data': body
+            'data': body,
         }
 
     async def __aenter__(self):
@@ -155,6 +155,6 @@ class CapacitanceManometer:
             response = await r.text()
             if not response or r.status > 200:
                 raise OSError(
-                    f"Could not communicate with eBaratron at '{self.address}'."
+                    f"Could not communicate with eBaratron at '{self.address}'.",
                 )
             return response

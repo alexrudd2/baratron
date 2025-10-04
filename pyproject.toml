@@ -56,7 +56,7 @@ ignore = [
 select = [
 #    "B",   # flake8-bugbear
     "C",   # complexity
-#    "COM", # trailing comma rules
+    "COM", # trailing comma rules
     "D",   # docstrings
     "E",   # pycodestyle errors
     "F",   # pyflakes
