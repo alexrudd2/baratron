@@ -106,20 +106,20 @@ class CapacitanceManometer:
             'data': body,
         }
 
-    async def __aenter__(self):
+    async def __aenter__(self) -> CapacitanceManometer:
         """Support `async with` by entering a client session."""
         await self.connect()
         return self
 
-    async def __aexit__(self, *err):
+    async def __aexit__(self, *err) -> None:
         """Support `async with` by exiting a client session."""
         await self.disconnect()
 
-    async def connect(self):
+    async def connect(self) -> None:
         """Connect with device, opening persistent session."""
         self.session = aiohttp.ClientSession(timeout=self.timeout)  #type: ignore   # fixme
 
-    async def disconnect(self):
+    async def disconnect(self) -> None:
         """Close the underlying session, if it exists."""
         if self.session is not None:
             await self.session.close()
@@ -157,7 +157,7 @@ class CapacitanceManometer:
                 state[key] = value  # type: ignore[literal-required]
         return state
 
-    async def _request(self):
+    async def _request(self) -> str:
         """Handle sending an HTTP request.
 
         This reads through "ToolWeb", which seems like SOAP with some extra
