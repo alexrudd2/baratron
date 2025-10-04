@@ -4,11 +4,23 @@ Python driver for MKS eBaratron capacitance manometers.
 Distributed under the GNU General Public License v2
 Copyright (C) 2019 NuMat Technologies
 """
-from typing import ClassVar
+from __future__ import annotations
+
+from typing import ClassVar, TypedDict
 from xml.etree import ElementTree
 
 import aiohttp
 
+ManometerState = TypedDict('ManometerState', {
+    'pressure': float,
+    'run hours': float,
+    'pressure units': str,
+    'led color': str,
+    'wait hours': float,
+    'drift': float,
+    'system status': str,
+    'full-scale pressure': float,
+})
 
 class CapacitanceManometer:
     """Driver for MKS eBaratron capacitance manometers.
@@ -27,7 +39,7 @@ class CapacitanceManometer:
         'system status': 'EVID_208',
         'full-scale pressure': 'EVID_1103',
     }
-    pressure_units: ClassVar = [
+    pressure_units: ClassVar[list[str]] = [
         'full-scale ratio',
         'psi',
         'torr',
@@ -113,35 +125,36 @@ class CapacitanceManometer:
             await self.session.close()
             self.session = None
 
-    async def get(self):
+    async def get(self) -> ManometerState:
         """Retrieve the current state of the device."""
         return self._process(await self._request())
 
-    def _process(self, response):
+    def _process(self, response) -> ManometerState:
         """Convert XML response into a simplified dictionary."""
-        state = {}
+        state: ManometerState = {}  # type: ignore[reportAssignmentType, typeddict-item]
         tree = ElementTree.fromstring(response)
         for item in tree.findall('V'):
             evid, value = item.get('Name'), item.text
+            assert value
             key = next(k for k, v in self.evids.items() if v == evid)
             if key == 'pressure units':
-                state[key] = self.pressure_units[int(value)]  # type: ignore   # fixme
+                state['pressure units'] = self.pressure_units[int(value)]
             elif key == 'system status':
-                i = int(value)  #type: ignore   # fixme
+                i = int(value)
                 statuses = ([s for bit, s in enumerate(self.status)
                              if s and bool(i >> bit & 1)] or ['ok'])
-                state[key] = ', '.join(statuses)
+                state['system status'] = ', '.join(statuses)
             elif key == 'led color':
-                i = int(value)  #type: ignore   # fixme
+                i = int(value)
                 led_statuses = ([s for bit, s in enumerate(self.led)
                                  if s and bool(i >> bit & 1)] or ['unknown'])
-                state[key] = ', '.join(led_statuses)
+                state['led color'] = ', '.join(led_statuses)
             elif key in ['pressure', 'full-scale pressure', 'drift']:
-                state[key] = float(value)  # type: ignore   # fixme
+                state[key] = float(value)  # type: ignore[literal-required]
             elif key in ['run hours', 'wait hours']:
-                state[key] = float(value) / 3600.0  # type: ignore   # fixme
+                state[key] = float(value) / 3600.0  # type: ignore[literal-required]
             else:
-                state[key] = value  # type: ignore   # fixme
+                state[key] = value  # type: ignore[literal-required]
         return state
 
     async def _request(self):
