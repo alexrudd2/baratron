@@ -28,6 +28,8 @@ jobs:
           uv sync --all-extras
       - name: Lint with ruff
         run: uv run ruff check .
+      - name: Test with pytest
+        run: uv run pytest
 
 permissions:
   contents: read
