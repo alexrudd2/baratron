@@ -60,7 +60,7 @@ ignore = [
 ]
 
 select = [
-#    "B",   # flake8-bugbear
+    "B",   # flake8-bugbear
     "C",   # complexity
     "COM", # trailing comma rules
     "D",   # docstrings

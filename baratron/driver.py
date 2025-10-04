@@ -84,7 +84,7 @@ class CapacitanceManometer:
             timeout (optional): Time to wait for a response before throwing
                 a TimeoutError. Default 1s.
         """
-        self.address = f"http://{address.lstrip('http://').rstrip('/')}/ToolWeb/Cmd"
+        self.address = f"http://{address.removeprefix('http://').rstrip('/')}/ToolWeb/Cmd"
         self.session = None
         self.timeout = aiohttp.ClientTimeout(total=timeout)
         ids = ''.join(f'<V Name="{evid}"/>' for evid in self.evids.values())
