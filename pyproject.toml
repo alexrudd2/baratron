@@ -42,8 +42,8 @@ dev = [
     "ruff==0.14.7",
     "pytest>=8.3.5",
     "pytest-asyncio>=0.24.0",
-    "mypy>=1.14.1",
     "pyright>=1.1.406",
+    "zuban>=0.3.0",
 ]
 
 [tool.ruff]
@@ -84,3 +84,5 @@ check_untyped_defs = true
 [tool.pyright]
 venvPath = "."
 venv = ".venv"
+enableTypeIgnoreComments = true
+typeCheckingMode = "standard"

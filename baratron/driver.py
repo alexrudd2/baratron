@@ -149,11 +149,11 @@ class CapacitanceManometer:
                                  if s and bool(i >> bit & 1)] or ['unknown'])
                 state['led color'] = ', '.join(led_statuses)
             elif key in ['pressure', 'full-scale pressure', 'drift']:
-                state[key] = float(value)  # type: ignore[literal-required]
+                state[key] = float(value)  # type: ignore[literal-required, misc]
             elif key in ['run hours', 'wait hours']:
-                state[key] = float(value) / 3600.0  # type: ignore[literal-required]
+                state[key] = float(value) / 3600.0  # type: ignore[literal-required, misc]
             else:
-                state[key] = value  # type: ignore[literal-required]
+                state[key] = value  # type: ignore[literal-required, misc]
         return state
 
     async def _request(self) -> str:
