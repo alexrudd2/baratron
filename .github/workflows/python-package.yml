@@ -23,17 +23,18 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
           enable-cache: true
+          activate-environment: true
       - name: Install dependencies
         run: |
           uv sync --all-extras
       - name: Lint with ruff
-        run: uv run ruff check .
+        run: ruff check .
       - name: Type check with zuban
-        run: uv run zuban check
+        run: zuban check
       - name: Type check with pyright
-        run: uv run pyright
+        run: pyright
       - name: Test with pytest
-        run: uv run pytest
+        run: pytest
 
 permissions:
   contents: read
