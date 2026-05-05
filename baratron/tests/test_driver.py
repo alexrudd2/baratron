@@ -65,7 +65,7 @@ class TestConnectionManagement:
         # Connect creates session
         await manometer.connect()
         assert manometer.session is not None
-        assert isinstance(manometer.session, ClientSession)
+        assert isinstance(manometer.session, ClientSession)  # type: ignore[unreachable]
         
         # Disconnect removes session
         await manometer.disconnect()
@@ -117,7 +117,7 @@ class TestDataRetrieval:
             assert manometer.session is not None
             
             # Verify data processing
-            assert isinstance(state, dict)
+            assert isinstance(state, dict)  # type:ignore[unreachable]
             assert 'pressure' in state
             assert 'pressure units' in state
             assert 'system status' in state
@@ -184,8 +184,8 @@ class TestDataProcessing:
         """Test conversion of numeric values from XML."""
         xml = f'<PollResponse><V Name="{evid}">{xml_value}</V></PollResponse>'
         state = manometer._process(xml)
-        assert state[key] == expected_value
-        assert isinstance(state[key], expected_type)
+        assert state[key] == expected_value  # type:ignore[literal-required]
+        assert isinstance(state[key], expected_type)  # type:ignore[literal-required]
     
     @pytest.mark.parametrize(("index", "expected_unit"), [
         (0, 'full-scale ratio'),

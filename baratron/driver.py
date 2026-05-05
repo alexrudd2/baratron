@@ -96,7 +96,7 @@ class CapacitanceManometer:
                 a TimeoutError. Default 1s.
         """
         self.address = f"http://{address.removeprefix('http://').rstrip('/')}/ToolWeb/Cmd"
-        self.session = None
+        self.session: aiohttp.ClientSession | None = None
         self.timeout = aiohttp.ClientTimeout(total=timeout)
         ids = ''.join(f'<V Name="{evid}"/>' for evid in self.evids.values())
         body = f'<PollRequest>{ids}</PollRequest>'
@@ -116,7 +116,7 @@ class CapacitanceManometer:
 
     async def connect(self) -> None:
         """Connect with device, opening persistent session."""
-        self.session = aiohttp.ClientSession(timeout=self.timeout)  #type: ignore   # fixme
+        self.session = aiohttp.ClientSession(timeout=self.timeout)
 
     async def disconnect(self) -> None:
         """Close the underlying session, if it exists."""
