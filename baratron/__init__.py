@@ -26,7 +26,7 @@ def command_line():
         try:
             async with CapacitanceManometer(args.address) as manometer:
                 print(json.dumps(await manometer.get(), indent=4, sort_keys=True))
-        except asyncio.TimeoutError:
+        except TimeoutError:
             sys.stderr.write(f'{red}Could not connect to device.{reset}\n')
         except Exception as e:
             sys.stderr.write(f'{red}{e}{reset}\n')
